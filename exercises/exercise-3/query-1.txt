@@ -1,0 +1,10 @@
+MATCH (user:User)-[:WROTE]->(project:Project),
+      (contributor:User)-[:CONTRIBUTED_TO]->(project),
+      (contributor:User)-[:WROTE]->(otherProject:Project)
+WHERE user.username = 'dsfiggs'
+      AND ANY (otherLanguage IN otherProject.language 
+        WHERE ANY (language IN project.language 
+          WHERE language = otherLanguage))
+RETURN contributor.username AS username,
+       otherProject.name AS project,
+       otherProject.language AS languages

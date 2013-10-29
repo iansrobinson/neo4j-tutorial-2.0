@@ -1,0 +1,18 @@
+MATCH (season:Season) WHERE season.season = 12
+CREATE UNIQUE (season)-[:LAST]->(newStory:Story{title:'Robot'})
+WITH season, newStory
+
+// Determine whether first story already exists
+WITH season, newStory, 
+     CASE WHEN NOT ((season)-[:FIRST]->()) THEN [1] ELSE []
+     END 
+  AS firstExists
+
+// Create FIRST rel newStory is first story
+FOREACH (i IN firstExists | CREATE UNIQUE (season)-[:FIRST]->(newStory))
+WITH season, newStory
+
+// Delete old LAST relationship
+MATCH (newStory)<-[:LAST]-(season)-[oldRel:LAST]->(oldLast)
+DELETE oldRel
+CREATE (oldLast)-[:NEXT]->(newStory)

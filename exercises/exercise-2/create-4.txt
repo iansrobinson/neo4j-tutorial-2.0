@@ -1,0 +1,8 @@
+MERGE (c:Company{name:'Acme'})
+MERGE (p:Person{username:'bill'})
+MERGE (s1:Skill{name:'Neo4j'})
+MERGE (s2:Skill{name:'Ruby'})
+CREATE UNIQUE (c)<-[:WORKS_FOR]-(p),
+    (p)-[:HAS_SKILL{level:1}]->(s1),
+    (p)-[:HAS_SKILL{level:2}]->(s2)
+RETURN c, p, s1, s2

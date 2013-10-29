@@ -1,0 +1,4 @@
+MATCH (project:Project)
+WHERE NONE (language IN project.language 
+          WHERE language = 'java')
+RETURN project.name

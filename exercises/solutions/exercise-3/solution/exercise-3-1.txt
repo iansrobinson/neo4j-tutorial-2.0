@@ -1,0 +1,4 @@
+MATCH (project:Project)
+WHERE ANY (language IN project.language 
+          WHERE language = 'ruby')
+RETURN project.name

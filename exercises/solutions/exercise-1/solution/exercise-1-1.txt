@@ -1,0 +1,4 @@
+MATCH (me:Person)-[:HAS_SKILL]->(skill),
+      (colleague)-[:HAS_SKILL]->(skill)
+WHERE  me.username = 'ian'
+RETURN me, colleague, skill
